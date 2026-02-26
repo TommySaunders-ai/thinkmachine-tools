@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tommysaunders-ai.github.io/thinkmachine-tools/sitemap.xml

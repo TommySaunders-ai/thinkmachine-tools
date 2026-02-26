@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Mindmap - Free Online Tool | ThinkMachine</title>
+  <meta name="description" content="Convert any text into a visual mind map using AI. Paste notes, articles, or meeting minutes and instantly see an interactive knowledge graph.">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Text to Mindmap - ThinkMachine">
+  <meta property="og:description" content="Convert any text into a visual mind map using AI. Paste notes, articles, or meeting minutes and instantly see an interactive knowledge graph.">
+  <meta property="og:url" content="https://tommysaunders-ai.github.io/thinkmachine-tools/tools/text-to-mindmap.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ThinkMachine Tools">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Text to Mindmap - ThinkMachine">
+  <meta name="twitter:description" content="Convert any text into a visual mind map using AI. Paste notes, articles, or meeting minutes and instantly see an interactive knowledge graph.">
+
+  <link rel="canonical" href="https://tommysaunders-ai.github.io/thinkmachine-tools/tools/text-to-mindmap.html">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Text to Mindmap",
+    "description": "Convert any text into a visual mind map using AI. Paste notes, articles, or meeting minutes and instantly see an interactive knowledge graph.",
+    "url": "https://tommysaunders-ai.github.io/thinkmachine-tools/tools/text-to-mindmap.html",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Organization", "name": "ThinkMachine", "url": "https://thinkmachine.com" }
+  }
+  </script>
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/tool.css">
+</head>
+<body>
+
+  <!-- ========== Header ========== -->
+  <header class="site-header">
+    <a href="../index.html" class="site-header__brand">ThinkMachine Tools</a>
+    <nav class="site-header__nav" aria-label="Main navigation">
+      <div class="site-header__dropdown">
+        <button class="site-header__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          Tools
+          <svg class="site-header__dropdown-chevron" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 11L3 6l.7-.7L8 9.6l4.3-4.3.7.7z" fill="currentColor"/></svg>
+        </button>
+        <div class="site-header__dropdown-menu" role="menu">
+          <a href="ai-mindmap-generator.html" role="menuitem">AI Mindmap Generator</a>
+          <a href="text-to-mindmap.html" role="menuitem" aria-current="page">Text to Mindmap</a>
+          <a href="website-to-mindmap.html" role="menuitem">Website to Mindmap</a>
+          <a href="markdown-to-mindmap.html" role="menuitem">Markdown to Mindmap</a>
+          <a href="pdf-to-mindmap.html" role="menuitem">PDF to Mindmap</a>
+          <a href="docx-to-mindmap.html" role="menuitem">Docx to Mindmap</a>
+        </div>
+      </div>
+      <a href="https://thinkmachine.com">ThinkMachine</a>
+      <a href="https://app.thinkmachine.com">Open App</a>
+    </nav>
+    <button class="site-header__menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 4.5h16M2 10h16M2 15.5h16" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+    </button>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <div class="mobile-nav__section">
+      <button class="mobile-nav__toggle" aria-expanded="false">
+        All Tools
+        <svg class="mobile-nav__chevron" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 11L3 6l.7-.7L8 9.6l4.3-4.3.7.7z" fill="currentColor"/></svg>
+      </button>
+      <div class="mobile-nav__submenu">
+        <a href="ai-mindmap-generator.html">AI Mindmap Generator</a>
+        <a href="text-to-mindmap.html">Text to Mindmap</a>
+        <a href="website-to-mindmap.html">Website to Mindmap</a>
+        <a href="markdown-to-mindmap.html">Markdown to Mindmap</a>
+        <a href="pdf-to-mindmap.html">PDF to Mindmap</a>
+        <a href="docx-to-mindmap.html">Docx to Mindmap</a>
+      </div>
+    </div>
+    <a href="https://thinkmachine.com">ThinkMachine</a>
+    <a href="https://app.thinkmachine.com">Open App</a>
+  </nav>
+
+  <div class="main-content">
+
+    <!-- ========== Hero + Input ========== -->
+    <section class="tool-hero">
+      <div class="grid">
+        <p class="tool-hero__eyebrow">AI-Powered Tool</p>
+        <h1 class="tool-hero__title">Text to Mindmap</h1>
+        <p class="tool-hero__subtitle">Convert any text into an interactive mind map</p>
+        <p class="tool-hero__description">Paste your notes, articles, meeting minutes, or any text content — our AI will extract key concepts and visualize them as an interactive knowledge graph.</p>
+
+        <div class="tool-input tool-input--stacked" data-tool-type="text">
+          <textarea class="tool-input__textarea" placeholder="Paste your text, notes, or article here..." aria-label="Paste text to convert into a mind map" rows="5"></textarea>
+          <button class="tool-input__btn btn btn--primary btn--lg">Generate Mind Map</button>
+        </div>
+
+        <div class="tool-examples">
+          <span class="tool-examples__label">Try an example:</span>
+          <div class="tool-examples__list">
+            <a href="#" class="tool-examples__link" data-text="We hold these truths to be self-evident, that all men are created equal...">Gettysburg Address</a>
+            <a href="#" class="tool-examples__link" data-text="One small step for man, one giant leap for mankind. The Apollo program...">Moon Landing</a>
+            <a href="#" class="tool-examples__link" data-text="I have a dream that one day this nation will rise up...">I Have a Dream</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Live Embed ========== -->
+    <section class="tool-embed" id="embed">
+      <div class="grid">
+        <div class="tool-embed__container">
+          <div class="tool-embed__placeholder">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+              <circle cx="24" cy="18" r="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="32" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="36" cy="32" r="4" stroke="currentColor" stroke-width="2"/>
+              <line x1="24" y1="23" x2="14" y2="29" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="24" y1="23" x2="34" y2="29" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <p>Paste your text above to generate a mind map</p>
+          </div>
+          <iframe class="tool-embed__iframe"
+                  style="display:none"
+                  title="Text to Mindmap - Live Preview"
+                  loading="lazy"
+                  allow="clipboard-write"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
+          </iframe>
+        </div>
+        <div class="tool-embed__actions">
+          <a href="https://app.thinkmachine.com" class="btn btn--ghost" target="_blank" rel="noopener">Open in ThinkMachine &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Features ========== -->
+    <section class="section tool-features" id="features">
+      <div class="grid">
+        <p class="section__eyebrow">Features</p>
+        <h2 class="section__heading">Why use Text to Mindmap?</h2>
+        <div class="tool-features__grid">
+          <div class="tile">
+            <div class="tile__icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h3 class="tile__title">AI-Powered Analysis</h3>
+            <p class="tile__description">Our AI breaks down any text into core concepts, sub-topics, and relationships — revealing connections you might have missed.</p>
+          </div>
+          <div class="tile">
+            <div class="tile__icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="19" cy="5" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="19" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="19" cy="19" r="2" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="10" x2="6.5" y2="6.5" stroke="currentColor" stroke-width="1"/><line x1="14" y1="10" x2="17.5" y2="6.5" stroke="currentColor" stroke-width="1"/><line x1="10" y1="14" x2="6.5" y2="17.5" stroke="currentColor" stroke-width="1"/><line x1="14" y1="14" x2="17.5" y2="17.5" stroke="currentColor" stroke-width="1"/></svg>
+            </div>
+            <h3 class="tile__title">Instant Visualization</h3>
+            <p class="tile__description">Transform dense text into clear, interactive visual maps in seconds. See the big picture and fine details simultaneously.</p>
+          </div>
+          <div class="tile">
+            <div class="tile__icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="tile__title">Powerful AI Search</h3>
+            <p class="tile__description">Navigate your knowledge graph with AI-assisted search. Find specific concepts, explore branches, and discover new connections.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== How It Works ========== -->
+    <section class="section" id="how-it-works">
+      <div class="grid">
+        <p class="section__eyebrow">How It Works</p>
+        <h2 class="section__heading">Text to Mindmap in 5 steps</h2>
+        <div class="tool-steps">
+          <div class="tool-step">
+            <span class="tool-step__number">01</span>
+            <div>
+              <h3 class="tool-step__title">Paste your text</h3>
+              <p class="tool-step__body">Copy and paste any text into the textarea — meeting notes, articles, research papers, or your own writing.</p>
+            </div>
+          </div>
+          <div class="tool-step">
+            <span class="tool-step__number">02</span>
+            <div>
+              <h3 class="tool-step__title">AI parses structure</h3>
+              <p class="tool-step__body">Our AI reads your text, identifies the organizational structure, and extracts the most important concepts.</p>
+            </div>
+          </div>
+          <div class="tool-step">
+            <span class="tool-step__number">03</span>
+            <div>
+              <h3 class="tool-step__title">Key concepts extracted</h3>
+              <p class="tool-step__body">Main topics, sub-topics, and supporting details are identified and categorized automatically.</p>
+            </div>
+          </div>
+          <div class="tool-step">
+            <span class="tool-step__number">04</span>
+            <div>
+              <h3 class="tool-step__title">Hierarchical map created</h3>
+              <p class="tool-step__body">Concepts are arranged into a hierarchical mind map showing how ideas connect and relate to each other.</p>
+            </div>
+          </div>
+          <div class="tool-step">
+            <span class="tool-step__number">05</span>
+            <div>
+              <h3 class="tool-step__title">Refine and share</h3>
+              <p class="tool-step__body">Click nodes to explore details, expand branches, and share your visual summary with others.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Use Cases ========== -->
+    <section class="section" id="use-cases">
+      <div class="grid">
+        <p class="section__eyebrow">Use Cases</p>
+        <h2 class="section__heading">Built for every workflow</h2>
+        <div class="tool-usecases__grid">
+          <div class="tile">
+            <h3 class="tile__title">Meeting Notes</h3>
+            <p class="tile__description">Paste meeting transcripts and instantly see key decisions, action items, and discussion topics organized in a visual map.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Academic Papers</h3>
+            <p class="tile__description">Convert research papers into structured mind maps that highlight methodology, findings, and conclusions at a glance.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Book Summaries</h3>
+            <p class="tile__description">Turn lengthy books into concise visual summaries. Capture main arguments, key themes, and supporting evidence.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Business Documents</h3>
+            <p class="tile__description">Visualize reports, proposals, and strategy documents. See the structure of complex business content instantly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Perfect For ========== -->
+    <section class="section" id="perfect-for">
+      <div class="grid">
+        <p class="section__eyebrow">Perfect For</p>
+        <h2 class="section__heading">Who uses Text to Mindmap?</h2>
+        <div class="tool-audience__grid">
+          <div class="tile">
+            <h3 class="tile__title">Researchers</h3>
+            <p class="tile__description">Map literature reviews, connect findings across papers, and identify unexplored research directions.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Knowledge Workers</h3>
+            <p class="tile__description">Organize complex information, prepare for meetings, and create shareable visual summaries.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Educators</h3>
+            <p class="tile__description">Create visual lesson plans, illustrate concept relationships, and help students see the big picture.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Business Analysts</h3>
+            <p class="tile__description">Map market landscapes, competitor analysis, and strategic planning in interactive visual formats.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Writers</h3>
+            <p class="tile__description">Outline narratives, track character relationships, and organize research for articles and books.</p>
+          </div>
+          <div class="tile">
+            <h3 class="tile__title">Developers</h3>
+            <p class="tile__description">Visualize system architectures, map API relationships, and document complex codebases.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Documentation ========== -->
+    <section class="section" id="documentation">
+      <div class="grid">
+        <p class="section__eyebrow">Documentation</p>
+        <h2 class="section__heading">URL Parameters</h2>
+        <p class="section__description">Use URL parameters to programmatically generate mind maps. Perfect for integrations and embedding.</p>
+        <div class="tool-docs__params">
+          <div class="tool-docs__param">
+            <code class="tool-docs__param-name">text</code>
+            <span class="tool-docs__param-type tag tag--blue">string</span>
+            <p class="tool-docs__param-desc">The text content to parse and convert into a mind map. Supports plain text of any length.</p>
+          </div>
+          <div class="tool-docs__param">
+            <code class="tool-docs__param-name">mindmap</code>
+            <span class="tool-docs__param-type tag tag--blue">boolean</span>
+            <p class="tool-docs__param-desc">Set to <code>true</code> to enable mind map generation mode.</p>
+          </div>
+          <div class="tool-docs__param">
+            <code class="tool-docs__param-name">name</code>
+            <span class="tool-docs__param-type tag tag--gray">string (optional)</span>
+            <p class="tool-docs__param-desc">Custom name for the generated mind map graph.</p>
+          </div>
+        </div>
+        <div class="tool-docs__example mt-07">
+          <h3 class="heading-02 mb-03">Example URL</h3>
+          <div class="tool-docs__code">
+            <code>https://app.thinkmachine.com/new?text=Artificial+Intelligence&amp;mindmap=true&amp;name=AI+Overview</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="tool-cta">
+      <div class="grid">
+        <h2 class="tool-cta__title">Ready to map your ideas?</h2>
+        <p class="tool-cta__body">Start converting text into mind maps in seconds. No account required.</p>
+        <div class="tool-cta__actions">
+          <a href="#" class="btn btn--primary btn--lg" onclick="document.querySelector('.tool-input__textarea').focus(); window.scrollTo({top:0,behavior:'smooth'}); return false;">Try It Now</a>
+          <a href="https://app.thinkmachine.com" class="btn btn--tertiary btn--lg" target="_blank" rel="noopener">Open ThinkMachine</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ========== Footer ========== -->
+  <footer class="site-footer">
+    <div class="grid">
+      <div class="site-footer__top">
+        <div>
+          <p class="site-footer__brand">ThinkMachine Tools</p>
+          <p class="site-footer__tagline">AI-powered 3D mind mapping for everyone.</p>
+        </div>
+        <div>
+          <p class="site-footer__heading">Tools</p>
+          <nav class="site-footer__nav">
+            <a href="ai-mindmap-generator.html">AI Mindmap Generator</a>
+            <a href="text-to-mindmap.html">Text to Mindmap</a>
+            <a href="website-to-mindmap.html">Website to Mindmap</a>
+            <a href="markdown-to-mindmap.html">Markdown to Mindmap</a>
+            <a href="pdf-to-mindmap.html">PDF to Mindmap</a>
+            <a href="docx-to-mindmap.html">Docx to Mindmap</a>
+          </nav>
+        </div>
+        <div>
+          <p class="site-footer__heading">ThinkMachine</p>
+          <nav class="site-footer__nav">
+            <a href="https://thinkmachine.com">Home</a>
+            <a href="https://app.thinkmachine.com">Open App</a>
+            <a href="https://thinkmachine.com/blog">Blog</a>
+          </nav>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <p>&copy; ThinkMachine. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/embed.js"></script>
+</body>
+</html>

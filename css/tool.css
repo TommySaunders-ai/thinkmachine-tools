@@ -1,0 +1,433 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOOL — Tool Page Sections (Hero, Embed, Features, Steps, Docs, CTA)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tool Hero ─────────────────────────────────────────────────────────── */
+.tool-hero {
+  padding-top: var(--tm-spacing-12);
+  padding-bottom: var(--tm-spacing-10);
+  text-align: center;
+}
+
+.tool-hero__eyebrow {
+  font-size: var(--tm-label-01-size);
+  font-weight: var(--tm-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tm-interactive);
+  margin-bottom: var(--tm-spacing-04);
+}
+
+.tool-hero__title {
+  margin-bottom: var(--tm-spacing-04);
+}
+
+.tool-hero__subtitle {
+  font-size: var(--tm-heading-03-size);
+  color: var(--tm-text-secondary);
+  margin-bottom: var(--tm-spacing-05);
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tool-hero__description {
+  color: var(--tm-text-secondary);
+  font-size: var(--tm-body-02-size);
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--tm-spacing-08);
+}
+
+/* ── Tool Input ────────────────────────────────────────────────────────── */
+.tool-input {
+  display: flex;
+  gap: var(--tm-spacing-03);
+  max-width: 640px;
+  margin: 0 auto var(--tm-spacing-05);
+}
+
+.tool-input__field {
+  flex: 1;
+  font-family: inherit;
+  font-size: var(--tm-body-02-size);
+  color: var(--tm-text-primary);
+  background: var(--tm-field-01);
+  border: 1px solid var(--tm-border-subtle-01);
+  border-radius: var(--tm-radius-md);
+  padding: var(--tm-spacing-04) var(--tm-spacing-05);
+  outline: none;
+  transition: border-color var(--tm-motion-fast) var(--tm-motion-ease);
+}
+.tool-input__field::placeholder {
+  color: var(--tm-text-placeholder);
+}
+.tool-input__field:focus {
+  border-color: var(--tm-border-interactive);
+  box-shadow: 0 0 0 1px var(--tm-border-interactive);
+}
+
+.tool-input__textarea {
+  flex: 1;
+  font-family: inherit;
+  font-size: var(--tm-body-02-size);
+  color: var(--tm-text-primary);
+  background: var(--tm-field-01);
+  border: 1px solid var(--tm-border-subtle-01);
+  border-radius: var(--tm-radius-md);
+  padding: var(--tm-spacing-04) var(--tm-spacing-05);
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color var(--tm-motion-fast) var(--tm-motion-ease);
+}
+.tool-input__textarea::placeholder {
+  color: var(--tm-text-placeholder);
+}
+.tool-input__textarea:focus {
+  border-color: var(--tm-border-interactive);
+  box-shadow: 0 0 0 1px var(--tm-border-interactive);
+}
+
+/* Textarea layout: stack vertically */
+.tool-input--stacked {
+  flex-direction: column;
+  align-items: stretch;
+}
+.tool-input--stacked .tool-input__btn {
+  align-self: flex-end;
+}
+
+.tool-input__btn {
+  flex-shrink: 0;
+}
+
+/* ── File Upload ───────────────────────────────────────────────────────── */
+.tool-input__upload {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  background: var(--tm-field-01);
+  border: 2px dashed var(--tm-border-subtle-01);
+  border-radius: var(--tm-radius-lg);
+  padding: var(--tm-spacing-07);
+  cursor: pointer;
+  transition: all var(--tm-motion-fast) var(--tm-motion-ease);
+}
+.tool-input__upload:hover,
+.tool-input__upload.is-dragover {
+  border-color: var(--tm-border-interactive);
+  background: var(--tm-field-hover-01);
+}
+
+.tool-input__upload-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--tm-icon-secondary);
+  margin-bottom: var(--tm-spacing-04);
+}
+.tool-input__upload-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tool-input__upload-text {
+  font-size: var(--tm-body-02-size);
+  color: var(--tm-text-primary);
+  margin-bottom: var(--tm-spacing-02);
+}
+
+.tool-input__upload-hint {
+  font-size: var(--tm-label-01-size);
+  color: var(--tm-text-placeholder);
+}
+
+.tool-input__upload-filename {
+  font-size: var(--tm-body-01-size);
+  color: var(--tm-interactive);
+  margin-top: var(--tm-spacing-03);
+}
+
+/* Upload layout: stack everything */
+.tool-input--upload {
+  flex-direction: column;
+  align-items: stretch;
+}
+.tool-input--upload .tool-input__btn {
+  align-self: center;
+  margin-top: var(--tm-spacing-05);
+}
+
+/* ── Example Links ─────────────────────────────────────────────────────── */
+.tool-examples {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tm-spacing-03);
+  flex-wrap: wrap;
+}
+
+.tool-examples__label {
+  font-size: var(--tm-body-01-size);
+  color: var(--tm-text-placeholder);
+}
+
+.tool-examples__list {
+  display: flex;
+  gap: var(--tm-spacing-03);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tool-examples__link {
+  font-size: var(--tm-body-01-size);
+  color: var(--tm-link-primary);
+  padding: var(--tm-spacing-02) var(--tm-spacing-03);
+  background: var(--tm-layer-01);
+  border: 1px solid var(--tm-border-subtle-00);
+  border-radius: var(--tm-radius-full);
+  transition: all var(--tm-motion-fast) var(--tm-motion-ease);
+}
+.tool-examples__link:hover {
+  background: var(--tm-layer-hover-01);
+  border-color: var(--tm-border-subtle-01);
+  color: var(--tm-link-primary-hover);
+}
+
+/* ── Live Embed ────────────────────────────────────────────────────────── */
+.tool-embed {
+  padding: var(--tm-spacing-09) 0 var(--tm-spacing-12);
+}
+
+.tool-embed__container {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  background: var(--tm-layer-01);
+  border: 1px solid var(--tm-border-subtle-00);
+  border-radius: var(--tm-radius-lg);
+  overflow: hidden;
+}
+
+.tool-embed__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--tm-text-placeholder);
+  gap: var(--tm-spacing-05);
+}
+.tool-embed__placeholder svg {
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+}
+.tool-embed__placeholder p {
+  font-size: var(--tm-body-01-size);
+}
+
+.tool-embed__iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+.tool-embed__actions {
+  text-align: center;
+  margin-top: var(--tm-spacing-05);
+}
+
+@media (max-width: 671px) {
+  .tool-embed__container { min-height: 300px; }
+  .tool-embed__placeholder { min-height: 300px; }
+  .tool-embed__iframe { height: 400px; }
+}
+
+/* ── Features Grid ─────────────────────────────────────────────────────── */
+.tool-features__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--tm-border-subtle-00);
+  border-radius: var(--tm-radius-lg);
+  overflow: hidden;
+  margin-top: var(--tm-spacing-07);
+}
+
+.tool-features__grid .tile {
+  border-radius: 0;
+  border: none;
+}
+
+@media (min-width: 672px) {
+  .tool-features__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── How It Works Steps ────────────────────────────────────────────────── */
+.tool-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tm-spacing-05);
+  margin-top: var(--tm-spacing-07);
+  max-width: 720px;
+}
+
+.tool-step {
+  display: flex;
+  gap: var(--tm-spacing-06);
+  padding: var(--tm-spacing-06);
+  background: var(--tm-layer-01);
+  border: 1px solid var(--tm-border-subtle-00);
+  border-radius: var(--tm-radius-lg);
+  transition: all var(--tm-motion-moderate) var(--tm-motion-ease);
+}
+.tool-step:hover {
+  border-color: var(--tm-border-subtle-01);
+  background: var(--tm-layer-hover-01);
+}
+
+.tool-step__number {
+  font-size: var(--tm-heading-04-size);
+  font-weight: var(--tm-font-weight-semibold);
+  color: var(--tm-interactive);
+  flex-shrink: 0;
+  width: 2.5rem;
+  line-height: 1;
+}
+
+.tool-step__title {
+  font-size: var(--tm-heading-02-size);
+  font-weight: var(--tm-font-weight-semibold);
+  margin-bottom: var(--tm-spacing-02);
+}
+
+.tool-step__body {
+  font-size: var(--tm-body-01-size);
+  color: var(--tm-text-secondary);
+  line-height: var(--tm-body-01-lh);
+}
+
+/* ── Use Cases Grid ────────────────────────────────────────────────────── */
+.tool-usecases__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tm-spacing-05);
+  margin-top: var(--tm-spacing-07);
+}
+
+@media (min-width: 672px) {
+  .tool-usecases__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Audience Cards ────────────────────────────────────────────────────── */
+.tool-audience__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tm-spacing-05);
+  margin-top: var(--tm-spacing-07);
+}
+
+@media (min-width: 672px) {
+  .tool-audience__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1056px) {
+  .tool-audience__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Documentation / Params ────────────────────────────────────────────── */
+.tool-docs__params {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tm-spacing-03);
+  margin-top: var(--tm-spacing-05);
+}
+
+.tool-docs__param {
+  display: flex;
+  align-items: baseline;
+  gap: var(--tm-spacing-04);
+  padding: var(--tm-spacing-04) var(--tm-spacing-05);
+  background: var(--tm-layer-01);
+  border: 1px solid var(--tm-border-subtle-00);
+  border-radius: var(--tm-radius-md);
+  flex-wrap: wrap;
+}
+
+.tool-docs__param-name {
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-code-02-size);
+  font-weight: var(--tm-font-weight-semibold);
+  color: var(--tm-interactive);
+  background: none;
+  padding: 0;
+}
+
+.tool-docs__param-type {
+  flex-shrink: 0;
+}
+
+.tool-docs__param-desc {
+  flex: 1;
+  font-size: var(--tm-body-01-size);
+  color: var(--tm-text-secondary);
+  min-width: 200px;
+}
+
+.tool-docs__example {
+  margin-top: var(--tm-spacing-07);
+}
+
+.tool-docs__code {
+  background: var(--tm-layer-01);
+  border: 1px solid var(--tm-border-subtle-00);
+  border-radius: var(--tm-radius-md);
+  padding: var(--tm-spacing-05);
+  overflow-x: auto;
+}
+
+.tool-docs__code code {
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-code-02-size);
+  color: var(--tm-text-primary);
+  background: none;
+  padding: 0;
+  word-break: break-all;
+}
+
+/* ── CTA Banner ────────────────────────────────────────────────────────── */
+.tool-cta {
+  padding: var(--tm-spacing-12) 0;
+  text-align: center;
+}
+
+.tool-cta__title {
+  margin-bottom: var(--tm-spacing-04);
+}
+
+.tool-cta__body {
+  color: var(--tm-text-secondary);
+  font-size: var(--tm-body-02-size);
+  max-width: 480px;
+  margin: 0 auto var(--tm-spacing-07);
+}
+
+.tool-cta__actions {
+  display: flex;
+  gap: var(--tm-spacing-04);
+  justify-content: center;
+  flex-wrap: wrap;
+}

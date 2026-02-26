@@ -1,0 +1,180 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — ThinkMachine Dark Theme
+
+   Single source of truth for all design decisions.
+   Namespace: --tm-*
+   Theme: Deep navy-black with indigo accent.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Color: Background ──────────────────────────────────────────────── */
+  --tm-background:             #0a0a0f;
+  --tm-background-hover:       rgba(141, 141, 141, 0.08);
+  --tm-background-active:      rgba(141, 141, 141, 0.16);
+  --tm-background-inverse:     #f4f4f4;
+
+  /* ── Color: Layer ───────────────────────────────────────────────────── */
+  --tm-layer-01:               #161622;
+  --tm-layer-02:               #1e1e2e;
+  --tm-layer-03:               #2a2a3e;
+  --tm-layer-hover-01:         #1c1c2c;
+  --tm-layer-hover-02:         #262638;
+  --tm-layer-active-01:        #2a2a3e;
+  --tm-layer-active-02:        #3a3a50;
+
+  /* ── Color: Field ───────────────────────────────────────────────────── */
+  --tm-field-01:               #161622;
+  --tm-field-02:               #1e1e2e;
+  --tm-field-hover-01:         #1c1c2c;
+  --tm-field-hover-02:         #262638;
+
+  /* ── Color: Text ────────────────────────────────────────────────────── */
+  --tm-text-primary:           #f0f0f5;
+  --tm-text-secondary:         #a0a0b8;
+  --tm-text-placeholder:       #5c5c78;
+  --tm-text-on-color:          #ffffff;
+  --tm-text-helper:            #8888a0;
+  --tm-text-error:             #ffb3b8;
+  --tm-text-inverse:           #0a0a0f;
+  --tm-text-disabled:          rgba(240, 240, 245, 0.25);
+
+  /* ── Color: Link ────────────────────────────────────────────────────── */
+  --tm-link-primary:           #818cf8;
+  --tm-link-primary-hover:     #a5b4fc;
+  --tm-link-secondary:         #a5b4fc;
+  --tm-link-visited:           #c4b5fd;
+  --tm-link-inverse:           #4f46e5;
+
+  /* ── Color: Icon ────────────────────────────────────────────────────── */
+  --tm-icon-primary:           #f0f0f5;
+  --tm-icon-secondary:         #a0a0b8;
+  --tm-icon-on-color:          #ffffff;
+  --tm-icon-interactive:       #818cf8;
+  --tm-icon-disabled:          rgba(240, 240, 245, 0.25);
+
+  /* ── Color: Border ──────────────────────────────────────────────────── */
+  --tm-border-subtle-00:       #1e1e2e;
+  --tm-border-subtle-01:       #2a2a3e;
+  --tm-border-strong-01:       #4a4a60;
+  --tm-border-interactive:     #6366f1;
+  --tm-border-disabled:        rgba(240, 240, 245, 0.1);
+
+  /* ── Color: Interactive / Accent ────────────────────────────────────── */
+  --tm-interactive:            #6366f1;
+  --tm-interactive-hover:      #818cf8;
+  --tm-interactive-active:     #4f46e5;
+
+  /* ── Color: Focus ───────────────────────────────────────────────────── */
+  --tm-focus:                  #818cf8;
+  --tm-focus-inset:            #0a0a0f;
+
+  /* ── Color: Button ──────────────────────────────────────────────────── */
+  --tm-button-primary:         #6366f1;
+  --tm-button-primary-hover:   #4f46e5;
+  --tm-button-primary-active:  #4338ca;
+  --tm-button-secondary:       #4a4a60;
+  --tm-button-secondary-hover: #5a5a70;
+  --tm-button-secondary-active:#3a3a50;
+  --tm-button-tertiary:        transparent;
+  --tm-button-tertiary-hover:  rgba(99, 102, 241, 0.12);
+  --tm-button-tertiary-active: rgba(99, 102, 241, 0.2);
+  --tm-button-ghost-hover:     rgba(141, 141, 141, 0.08);
+  --tm-button-ghost-active:    rgba(141, 141, 141, 0.16);
+
+  /* ── Color: Support ─────────────────────────────────────────────────── */
+  --tm-support-error:          #f87171;
+  --tm-support-success:        #4ade80;
+  --tm-support-warning:        #fbbf24;
+  --tm-support-info:           #6366f1;
+  --tm-support-error-inverse:  #991b1b;
+  --tm-support-success-inverse:#166534;
+
+  /* ── Color: Tag ─────────────────────────────────────────────────────── */
+  --tm-tag-blue-bg:            rgba(99, 102, 241, 0.2);
+  --tm-tag-blue-text:          #a5b4fc;
+  --tm-tag-green-bg:           rgba(74, 222, 128, 0.15);
+  --tm-tag-green-text:         #4ade80;
+  --tm-tag-purple-bg:          rgba(168, 85, 247, 0.2);
+  --tm-tag-purple-text:        #c084fc;
+  --tm-tag-gray-bg:            rgba(161, 161, 170, 0.15);
+  --tm-tag-gray-text:          #a1a1aa;
+
+  /* ── Spacing (8px base scale) ───────────────────────────────────────── */
+  --tm-spacing-01:  0.125rem;  /*  2px */
+  --tm-spacing-02:  0.25rem;   /*  4px */
+  --tm-spacing-03:  0.5rem;    /*  8px */
+  --tm-spacing-04:  0.75rem;   /* 12px */
+  --tm-spacing-05:  1rem;      /* 16px */
+  --tm-spacing-06:  1.5rem;    /* 24px */
+  --tm-spacing-07:  2rem;      /* 32px */
+  --tm-spacing-08:  2.5rem;    /* 40px */
+  --tm-spacing-09:  3rem;      /* 48px */
+  --tm-spacing-10:  4rem;      /* 64px */
+  --tm-spacing-11:  5rem;      /* 80px */
+  --tm-spacing-12:  6rem;      /* 96px */
+  --tm-spacing-13:  10rem;     /* 160px */
+
+  /* ── Typography ─────────────────────────────────────────────────────── */
+  --tm-font-sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --tm-font-mono:  'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+  --tm-font-weight-light:     300;
+  --tm-font-weight-regular:   400;
+  --tm-font-weight-medium:    500;
+  --tm-font-weight-semibold:  600;
+
+  /* Heading scale */
+  --tm-heading-07-size:  3.375rem;  /* 54px  */
+  --tm-heading-07-lh:    1.05;
+  --tm-heading-06-size:  2.625rem;  /* 42px  */
+  --tm-heading-06-lh:    1.1;
+  --tm-heading-05-size:  2rem;      /* 32px  */
+  --tm-heading-05-lh:    1.2;
+  --tm-heading-04-size:  1.75rem;   /* 28px  */
+  --tm-heading-04-lh:    1.25;
+  --tm-heading-03-size:  1.25rem;   /* 20px  */
+  --tm-heading-03-lh:    1.3;
+  --tm-heading-02-size:  1rem;      /* 16px  */
+  --tm-heading-02-lh:    1.375;
+  --tm-heading-01-size:  0.875rem;  /* 14px  */
+  --tm-heading-01-lh:    1.4;
+
+  /* Body scale */
+  --tm-body-02-size:     1rem;      /* 16px  */
+  --tm-body-02-lh:       1.625;
+  --tm-body-01-size:     0.875rem;  /* 14px  */
+  --tm-body-01-lh:       1.5;
+  --tm-label-01-size:    0.75rem;   /* 12px  */
+  --tm-label-01-lh:      1.5;
+
+  /* Code scale */
+  --tm-code-02-size:     0.875rem;
+  --tm-code-01-size:     0.75rem;
+
+  /* ── Grid ───────────────────────────────────────────────────────────── */
+  --tm-grid-max:         1280px;
+  --tm-grid-margin-sm:   1rem;
+  --tm-grid-margin-md:   2rem;
+  --tm-grid-margin-lg:   2.5rem;
+
+  /* ── Motion ─────────────────────────────────────────────────────────── */
+  --tm-motion-fast:      100ms;
+  --tm-motion-moderate:  200ms;
+  --tm-motion-slow:      300ms;
+  --tm-motion-ease:      cubic-bezier(0.2, 0, 0.38, 0.9);
+  --tm-motion-entrance:  cubic-bezier(0, 0, 0.38, 0.9);
+  --tm-motion-exit:      cubic-bezier(0.2, 0, 1, 0.9);
+
+  /* ── Border Radius ──────────────────────────────────────────────────── */
+  --tm-radius-sm:  0.375rem;  /*  6px */
+  --tm-radius-md:  0.5rem;    /*  8px */
+  --tm-radius-lg:  0.75rem;   /* 12px */
+  --tm-radius-xl:  1rem;      /* 16px */
+  --tm-radius-full: 9999px;
+
+  /* ── Shadows ────────────────────────────────────────────────────────── */
+  --tm-shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3);
+  --tm-shadow-md:  0 4px 12px rgba(0, 0, 0, 0.4);
+  --tm-shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.5);
+  --tm-shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.6);
+}
