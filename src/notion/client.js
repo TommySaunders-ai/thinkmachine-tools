@@ -248,6 +248,203 @@ export class NotionService {
     }
   }
 
+  // ─── Article Operations (Areas of IO) ─────────────────────────────
+
+  /**
+   * Paginated query — yields all pages from a database, handling 10K+ records.
+   * Uses cursor-based pagination with configurable concurrency.
+   */
+  async *queryAllPages(databaseId, { filter, sorts, pageSize = 100 } = {}) {
+    let cursor;
+    do {
+      const response = await this.client.databases.query({
+        database_id: databaseId,
+        filter: filter || undefined,
+        sorts: sorts || undefined,
+        start_cursor: cursor || undefined,
+        page_size: pageSize,
+      });
+      for (const page of response.results) {
+        yield page;
+      }
+      cursor = response.has_more ? response.next_cursor : null;
+    } while (cursor);
+  }
+
+  /**
+   * Get all articles for an area, with pagination.
+   * @param {string} areaName - e.g., 'Notion IO'
+   * @param {Object} options - { status, contentType }
+   */
+  async getArticlesForArea(areaName, { status, contentType } = {}) {
+    const conditions = [
+      { property: 'Area of IO', select: { equals: areaName } },
+    ];
+    if (status) conditions.push({ property: 'Publish Status', select: { equals: status } });
+    if (contentType) conditions.push({ property: 'Content Type', select: { equals: contentType } });
+
+    const filter = conditions.length === 1 ? conditions[0] : { and: conditions };
+    const articles = [];
+
+    for await (const page of this.queryAllPages(this.databases.articles, {
+      filter,
+      sorts: [{ property: 'Priority', direction: 'ascending' }],
+    })) {
+      articles.push({
+        id: page.id,
+        ...this.#parseArticleProperties(page.properties),
+      });
+    }
+    return articles;
+  }
+
+  /**
+   * Get a single article with full body content parsed into sections.
+   */
+  async getArticleWithBody(articleId) {
+    const page = await this.client.pages.retrieve({ page_id: articleId });
+    const article = {
+      id: page.id,
+      ...this.#parseArticleProperties(page.properties),
+    };
+
+    // Parse page body into structured sections
+    const blocks = await this.getBlockContent(articleId);
+    article.bodySections = this.#parseBodySections(blocks);
+
+    // Fetch linked questions and structured data
+    if (this.databases.questions) {
+      article.questions = await this.#getLinkedRecords(this.databases.questions, articleId, 'Article');
+    }
+    if (this.databases.structuredData) {
+      article.structuredData = await this.#getLinkedRecords(this.databases.structuredData, articleId, 'Article');
+    }
+
+    return article;
+  }
+
+  /**
+   * Parse page body blocks into sections keyed by heading.
+   * Looks for H2 headings matching section names or SEC-XXX-NNN IDs.
+   */
+  #parseBodySections(blocks) {
+    const sections = {};
+    let currentSection = null;
+
+    for (const block of blocks) {
+      if (block.type === 'heading_2') {
+        currentSection = block.text || '';
+        sections[currentSection] = [];
+      } else if (currentSection) {
+        sections[currentSection].push(block);
+      }
+    }
+    return sections;
+  }
+
+  #parseArticleProperties(props) {
+    return {
+      title: this.#extractTitle(props['Article Title'] || props['Name']),
+      subtitle: this.#extractText(props['Article Subtitle']),
+      contentType: this.#extractSelect(props['Content Type']),
+      areaOfIO: this.#extractSelect(props['Area of IO']),
+      publishStatus: this.#extractSelect(props['Publish Status']) || 'Draft',
+      publishDate: this.#extractDate(props['Publish Date']),
+      lastUpdated: this.#extractDate(props['Last Updated']),
+      tags: this.#extractMultiSelect(props['Tags']),
+      priority: this.#extractSelect(props['Priority']),
+      difficulty: this.#extractSelect(props['Difficulty Level']),
+      readingTime: this.#extractNumber(props['Reading Time']),
+      wordCount: this.#extractNumber(props['Word Count']),
+      featuredImage: this.#extractUrl(props['Featured Image']),
+      thumbnailImage: this.#extractUrl(props['Thumbnail Image']),
+      publishedUrl: this.#extractUrl(props['Published URL']),
+      buildStatus: this.#extractSelect(props['Build Status']),
+      version: this.#extractNumber(props['Version']),
+      contentScore: this.#extractNumber(props['Content Score']),
+      seoScore: this.#extractNumber(props['SEO Score']),
+      batchId: this.#extractText(props['Batch ID']),
+      // SEO
+      primaryKeyword: this.#extractText(props['Primary Keyword']),
+      secondaryKeywords: this.#extractText(props['Secondary Keywords']),
+      seoTitle: this.#extractText(props['SEO Title']),
+      metaDescription: this.#extractText(props['Meta Description']),
+      h1Tag: this.#extractText(props['H1 Tag']),
+      urlSlug: this.#extractText(props['URL Slug']),
+      canonicalUrl: this.#extractUrl(props['Canonical URL']),
+      ogTitle: this.#extractText(props['OG Title']),
+      ogDescription: this.#extractText(props['OG Description']),
+      ogImage: this.#extractUrl(props['OG Image']),
+      searchIntent: this.#extractSelect(props['Search Intent']),
+      contentCluster: this.#extractSelect(props['Content Cluster']),
+      readabilityScore: this.#extractNumber(props['Readability Score']),
+      wordCountTarget: this.#extractNumber(props['Word Count Target']),
+      // Content
+      primaryDefinition: this.#extractText(props['Primary Definition']),
+      importanceStatement: this.#extractText(props['Importance Statement']),
+      tldrSummary: this.#extractText(props['TL;DR Summary']),
+      primaryBenefits: this.#extractText(props['Primary Benefits']),
+      verdict: this.#extractText(props['Verdict']),
+      targetAudience: this.#extractMultiSelect(props['Target Audience']),
+      primaryUseCases: this.#extractMultiSelect(props['Primary Use Cases']),
+      keyRisks: this.#extractMultiSelect(props['Key Risks']),
+      keyIntegrations: this.#extractMultiSelect(props['Key Integrations']),
+    };
+  }
+
+  /**
+   * Write published URL and build status back to an article.
+   */
+  async writeBackArticleUrl(articleId, url, buildStatus = 'Deployed') {
+    return this.updatePage(articleId, {
+      'Published URL': { url },
+      'Build Status': { select: { name: buildStatus } },
+      'Build Timestamp': { date: { start: new Date().toISOString() } },
+    });
+  }
+
+  /**
+   * Batch write-back URLs for multiple articles.
+   * @param {Array<{id, url}>} articles
+   * @param {number} concurrency - parallel requests (max 3 for Notion)
+   */
+  async batchWriteBackUrls(articles, concurrency = 3) {
+    const results = [];
+    for (let i = 0; i < articles.length; i += concurrency) {
+      const batch = articles.slice(i, i + concurrency);
+      const batchResults = await Promise.allSettled(
+        batch.map(a => this.writeBackArticleUrl(a.id, a.url))
+      );
+      results.push(...batchResults);
+      // Rate limit pause between batches
+      if (i + concurrency < articles.length) {
+        await new Promise(r => setTimeout(r, 1100));
+      }
+    }
+    return results;
+  }
+
+  /**
+   * Get linked records (questions, structured data) for an article.
+   */
+  async #getLinkedRecords(databaseId, articleId, relationProperty) {
+    const records = [];
+    for await (const page of this.queryAllPages(databaseId, {
+      filter: { property: relationProperty, relation: { contains: articleId } },
+    })) {
+      records.push({
+        id: page.id,
+        properties: page.properties,
+      });
+    }
+    return records;
+  }
+
+  #extractDate(prop) {
+    if (!prop || prop.type !== 'date' || !prop.date) return null;
+    return prop.date.start;
+  }
+
   // ─── Full Site Extraction ──────────────────────────────────────────
 
   async extractFullSite(siteId) {

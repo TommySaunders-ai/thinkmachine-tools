@@ -23,6 +23,8 @@ import { generateRobotsTxt } from '../generator/seo.js';
 import { generateJsonLd } from '../generator/seo.js';
 import { generateThemeCss } from '../generator/theme.js';
 import { GitHubPublisher } from '../publisher/github.js';
+import { bulkPublishFromCLI } from '../publisher/bulk-publisher.js';
+import { generateArticlePage } from '../generator/article-page.js';
 import { generateSitemap as aiGenerateSitemap } from '../ai/sitemap-generator.js';
 import { generatePageCopy } from '../ai/copy-generator.js';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
@@ -53,6 +55,11 @@ function loadConfig() {
         testimonials: process.env.NOTION_TESTIMONIALS_DB || '',
         team: process.env.NOTION_TEAM_DB || '',
         buildLog: process.env.NOTION_BUILD_LOG_DB || '',
+        articles: process.env.NOTION_ARTICLES_DB || '',
+        questions: process.env.NOTION_QUESTIONS_DB || '',
+        structuredData: process.env.NOTION_STRUCTURED_DATA_DB || '',
+        sectionLibrary: process.env.NOTION_SECTION_LIBRARY_DB || '',
+        areas: process.env.NOTION_AREAS_DB || '',
       },
     },
     siteId: process.env.NOTION_SITE_ID || '',
@@ -457,6 +464,29 @@ async function main() {
       case 'agent':
         await commandAgent(config, args);
         break;
+      case 'bulk-publish':
+        await bulkPublishFromCLI({
+          notionApiKey: config.notion.apiKey,
+          databases: config.notion.databases,
+          siteName: 'Intelligent Operations',
+          domain: config.domain || '',
+          theme: 'G100',
+        }, args);
+        break;
+      case 'build-article': {
+        const articleId = getArg(args, '--id');
+        if (!articleId) { console.error('Error: --id required'); process.exit(1); }
+        const notion = new NotionService(config.notion);
+        const article = await notion.getArticleWithBody(articleId);
+        const html = generateArticlePage(article, { theme: 'G100' });
+        const outDir = getArg(args, '--output') || config.outputDir || '_site';
+        const slug = article.urlSlug || article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const outPath = join(outDir, 'areas', slug, 'index.html');
+        mkdirSync(dirname(outPath), { recursive: true });
+        writeFileSync(outPath, html, 'utf-8');
+        console.log(`Built: ${outPath}`);
+        break;
+      }
       default:
         console.log(`
 intelligentoperations.ai Site Builder
@@ -470,6 +500,8 @@ Commands:
   preview     Build to local directory for preview
   sync        Bidirectional Notion <-> GitHub sync
   agent       Start the Notion agent for continuous change detection
+  bulk-publish  Bulk publish articles from Notion (10,000+ supported)
+  build-article Build a single article by Notion page ID
 
 Sync Options:
   --direction <dir>  Sync direction: full, pull-only, push-only, detect-only
@@ -480,6 +512,16 @@ Sync Options:
 Agent Options:
   --interval <sec>   Polling interval in seconds (default: 60)
   --once             Run one-shot detection and exit
+
+Bulk Publish Options:
+  --area <id>        Area ID (e.g., notion-io) or omit for all
+  --batch <id>       Batch ID filter
+  --status <status>  Article status filter (default: Approved)
+  --no-write-back    Skip writing URLs back to Notion
+  --theme <theme>    Carbon theme (White, G10, G90, G100)
+
+Build Article Options:
+  --id <page-id>     Notion page ID of the article
 
 General Options:
   --output <dir>     Output directory (default: ./_site)
@@ -496,6 +538,10 @@ Environment Variables:
   NOTION_TESTIMONIALS_DB Notion Testimonials database ID
   NOTION_TEAM_DB         Notion Team database ID
   NOTION_BUILD_LOG_DB    Notion Build Log database ID
+  NOTION_ARTICLES_DB     Notion Articles database ID
+  NOTION_QUESTIONS_DB    Notion Questions database ID
+  NOTION_STRUCTURED_DATA_DB  Notion Structured Data database ID
+  NOTION_AREAS_DB        Notion Areas database ID
   GITHUB_REPO            GitHub repository (owner/repo)
   OUTPUT_DIR             Output directory
 `);

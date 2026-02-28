@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <meta property="og:title" content="{{OG_TITLE}}">
+  <meta property="og:description" content="{{OG_DESCRIPTION}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  {{JSON_LD}}
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:#161616;color:#f4f4f4;line-height:1.6}
+    .bx--grid{max-width:1056px;margin:0 auto;padding:0 1rem}
+    a{color:#4589ff}
+    h1,h2,h3{font-weight:600}
+  </style>
+</head>
+<body>
+  <header style="padding:3rem 0 2rem;border-bottom:1px solid #393939">
+    <div class="bx--grid">
+      <h1 style="font-size:2.5rem">{{H1}}</h1>
+      <p style="color:#c6c6c6;margin-top:0.5rem">{{SUBTITLE}}</p>
+    </div>
+  </header>
+  <main class="bx--grid" style="padding:2rem 1rem">
+    {{CONTENT}}
+  </main>
+  <footer style="padding:2rem 0;text-align:center;font-size:0.875rem;color:#c6c6c6">
+    <div class="bx--grid">Intelligent Operations</div>
+  </footer>
+</body>
+</html>

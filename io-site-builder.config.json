@@ -8,10 +8,17 @@
       "services": "",
       "testimonials": "",
       "team": "",
-      "buildLog": ""
+      "buildLog": "",
+      "articles": "",
+      "questions": "",
+      "structuredData": "",
+      "sectionLibrary": "",
+      "areas": ""
     }
   },
   "siteId": "",
+  "siteName": "Intelligent Operations",
+  "domain": "",
   "outputDir": "./_site",
   "github": {
     "repo": "TommySaunders-ai/thinkmachine-tools",

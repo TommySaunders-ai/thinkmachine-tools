@@ -1,0 +1,87 @@
+name: Notion Bulk Publish
+
+on:
+  repository_dispatch:
+    types: [notion-bulk-publish]
+  workflow_dispatch:
+    inputs:
+      area:
+        description: 'Area ID (e.g., notion-io) or "all"'
+        required: false
+        default: 'all'
+      status:
+        description: 'Article status filter'
+        required: false
+        default: 'Approved'
+      batch_id:
+        description: 'Batch ID filter (optional)'
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: bulk-publish
+  cancel-in-progress: false
+
+jobs:
+  bulk-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Determine parameters
+        id: params
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "area=${{ github.event.client_payload.area || 'all' }}" >> $GITHUB_OUTPUT
+            echo "status=${{ github.event.client_payload.status || 'Approved' }}" >> $GITHUB_OUTPUT
+            echo "batch=${{ github.event.client_payload.batch_id || '' }}" >> $GITHUB_OUTPUT
+          else
+            echo "area=${{ inputs.area || 'all' }}" >> $GITHUB_OUTPUT
+            echo "status=${{ inputs.status || 'Approved' }}" >> $GITHUB_OUTPUT
+            echo "batch=${{ inputs.batch_id || '' }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Bulk publish articles
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_ARTICLES_DB: ${{ secrets.NOTION_ARTICLES_DB }}
+          NOTION_QUESTIONS_DB: ${{ secrets.NOTION_QUESTIONS_DB }}
+          NOTION_STRUCTURED_DATA_DB: ${{ secrets.NOTION_STRUCTURED_DATA_DB }}
+        run: |
+          ARGS="bulk-publish --status ${{ steps.params.outputs.status }} --output dist"
+          if [ "${{ steps.params.outputs.area }}" != "all" ]; then
+            ARGS="$ARGS --area ${{ steps.params.outputs.area }}"
+          fi
+          if [ -n "${{ steps.params.outputs.batch }}" ]; then
+            ARGS="$ARGS --batch ${{ steps.params.outputs.batch }}"
+          fi
+          node src/cli/index.js $ARGS
+
+      - name: Commit built files
+        run: |
+          git config user.name "io-site-builder[bot]"
+          git config user.email "bot@intelligentoperations.ai"
+          git add dist/
+          git diff --staged --quiet && echo "No changes" || git commit -m "Bulk publish: ${{ steps.params.outputs.area }} (${{ steps.params.outputs.status }})"
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
