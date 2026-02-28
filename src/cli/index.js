@@ -13,6 +13,26 @@
  *   preview   — Build to local directory for preview
  */
 
+import { readFileSync as readEnvFile, existsSync as envExists } from 'fs';
+import { join as joinEnv, dirname as dirnameEnv } from 'path';
+import { fileURLToPath as urlToPathEnv } from 'url';
+
+// Auto-load .env from project root
+const __envDir = dirnameEnv(urlToPathEnv(import.meta.url));
+const __envPath = joinEnv(__envDir, '..', '..', '.env');
+if (envExists(__envPath)) {
+  for (const line of readEnvFile(__envPath, 'utf-8').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eqIdx = trimmed.indexOf('=');
+    if (eqIdx > 0) {
+      const key = trimmed.slice(0, eqIdx).trim();
+      const val = trimmed.slice(eqIdx + 1).trim();
+      if (!process.env[key]) process.env[key] = val;
+    }
+  }
+}
+
 import { NotionService } from '../notion/client.js';
 import { NotionAgent } from '../notion/agent.js';
 import { NotionSync } from '../sync/notion-sync.js';

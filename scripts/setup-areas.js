@@ -15,12 +15,32 @@
  *   NOTION_API_KEY=your_key NOTION_PARENT_PAGE=page_id node scripts/setup-areas.js
  */
 
+import { readFileSync, existsSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { Client } from '@notionhq/client';
 import {
   GROUPS, AREAS, CONTENT_TYPES, SECTIONS,
   CORE_PROPERTY_SECTIONS, LINKED_DB_SECTIONS,
   getLibrarySummary,
 } from '../src/notion/section-library.js';
+
+// Auto-load .env from project root
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const envPath = join(__dirname, '..', '.env');
+if (existsSync(envPath)) {
+  for (const line of readFileSync(envPath, 'utf-8').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eqIdx = trimmed.indexOf('=');
+    if (eqIdx > 0) {
+      const key = trimmed.slice(0, eqIdx).trim();
+      const val = trimmed.slice(eqIdx + 1).trim();
+      if (!process.env[key]) process.env[key] = val;
+    }
+  }
+}
 
 const apiKey = process.env.NOTION_API_KEY;
 let parentPageId = process.env.NOTION_PARENT_PAGE;
