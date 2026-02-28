@@ -14,6 +14,8 @@
  */
 
 import { NotionService } from '../notion/client.js';
+import { NotionAgent } from '../notion/agent.js';
+import { NotionSync } from '../sync/notion-sync.js';
 import { selectComponentsForPage } from '../carbon/selector.js';
 import { generatePage } from '../generator/html.js';
 import { generateSitemap, generateSitemap as genSitemap } from '../generator/seo.js';
@@ -50,6 +52,7 @@ function loadConfig() {
         services: process.env.NOTION_SERVICES_DB || '',
         testimonials: process.env.NOTION_TESTIMONIALS_DB || '',
         team: process.env.NOTION_TEAM_DB || '',
+        buildLog: process.env.NOTION_BUILD_LOG_DB || '',
       },
     },
     siteId: process.env.NOTION_SITE_ID || '',
@@ -292,7 +295,128 @@ function getDemoSiteData() {
   };
 }
 
+// ─── Sync Command ──────────────────────────────────────────────────
+
+async function commandSync(config, args) {
+  const direction = getArg(args, '--direction') || 'full';
+  const status = getArg(args, '--status');
+  const error = getArg(args, '--error');
+  const detectOnly = args.includes('--detect-only');
+
+  if (!config.notion.apiKey || !config.siteId) {
+    console.error('[sync] NOTION_API_KEY and NOTION_SITE_ID are required for sync');
+    process.exit(1);
+  }
+
+  const sync = new NotionSync({
+    apiKey: config.notion.apiKey,
+    databases: config.notion.databases,
+    siteId: config.siteId,
+    github: config.github,
+    outputDir: config.outputDir,
+    projectRoot: PROJECT_ROOT,
+  });
+
+  if (detectOnly) {
+    console.log('=== Detecting Notion Changes ===\n');
+    const { changes } = await sync.detectChanges();
+    if (changes.length > 0) {
+      console.log(`${changes.length} changes detected:`);
+      for (const c of changes) {
+        console.log(`  [${c.type}] ${c.title} (${c.pageId})`);
+      }
+    } else {
+      console.log('No changes detected');
+    }
+    return;
+  }
+
+  if (direction === 'push-only') {
+    console.log('=== Syncing Status to Notion ===\n');
+    await sync.pushToNotion({
+      buildResult: null,
+      deployUrl: config.github.repo
+        ? `https://${config.github.repo.split('/')[0]}.github.io/${config.github.repo.split('/')[1]}/`
+        : null,
+      error: error ? new Error(error) : null,
+    });
+    return;
+  }
+
+  if (direction === 'pull-only') {
+    console.log('=== Pulling from Notion ===\n');
+    const siteData = await sync.pullFromNotion();
+    // Build without status write-back
+    await commandBuild({ ...config, _siteData: siteData });
+    return;
+  }
+
+  // Full sync
+  console.log('=== Full Notion Sync ===\n');
+  await sync.fullSync({
+    buildFn: async (siteData) => {
+      return commandBuild({ ...config, _siteData: siteData });
+    },
+  });
+}
+
+// ─── Agent Command ─────────────────────────────────────────────────
+
+async function commandAgent(config, args) {
+  const interval = parseInt(getArg(args, '--interval') || '60', 10);
+  const oneShot = args.includes('--once');
+
+  if (!config.notion.apiKey || !config.siteId) {
+    console.error('[agent] NOTION_API_KEY and NOTION_SITE_ID are required');
+    process.exit(1);
+  }
+
+  const agent = new NotionAgent({
+    apiKey: config.notion.apiKey,
+    databases: config.notion.databases,
+    siteId: config.siteId,
+    pollIntervalMs: interval * 1000,
+    onChangeDetected: async (changes) => {
+      console.log(`\n[agent] ${changes.length} change(s) detected — triggering rebuild...\n`);
+
+      try {
+        await commandBuild(config);
+        await agent.reportBuildStatus({
+          siteId: config.siteId,
+          status: 'Published',
+        });
+        console.log('[agent] Build complete, status synced to Notion');
+      } catch (err) {
+        console.error(`[agent] Build failed: ${err.message}`);
+        await agent.reportBuildStatus({
+          siteId: config.siteId,
+          status: 'Draft',
+          error: err.message,
+        });
+      }
+    },
+  });
+
+  if (oneShot) {
+    console.log('=== Notion Agent (One-Shot) ===\n');
+    await agent.checkOnce();
+  } else {
+    console.log('=== Notion Agent (Continuous) ===\n');
+    console.log(`Polling every ${interval}s. Press Ctrl+C to stop.\n`);
+    await agent.start();
+
+    // Keep process alive
+    await new Promise(() => {});
+  }
+}
+
 // ─── Entry Point ───────────────────────────────────────────────────
+
+function getArg(args, flag) {
+  const idx = args.indexOf(flag);
+  if (idx !== -1 && args[idx + 1]) return args[idx + 1];
+  return null;
+}
 
 async function main() {
   const args = process.argv.slice(2);
@@ -327,6 +451,12 @@ async function main() {
       case 'preview':
         await commandPreview(config);
         break;
+      case 'sync':
+        await commandSync(config, args);
+        break;
+      case 'agent':
+        await commandAgent(config, args);
+        break;
       default:
         console.log(`
 intelligentoperations.ai Site Builder
@@ -338,8 +468,20 @@ Commands:
   build       Build static HTML pages from Notion content
   publish     Build + commit + push to GitHub Pages
   preview     Build to local directory for preview
+  sync        Bidirectional Notion <-> GitHub sync
+  agent       Start the Notion agent for continuous change detection
 
-Options:
+Sync Options:
+  --direction <dir>  Sync direction: full, pull-only, push-only, detect-only
+  --detect-only      Only check for changes (no build)
+  --status <status>  Status to write back (for push-only)
+  --error <msg>      Error message to write back (for push-only)
+
+Agent Options:
+  --interval <sec>   Polling interval in seconds (default: 60)
+  --once             Run one-shot detection and exit
+
+General Options:
   --output <dir>     Output directory (default: ./_site)
   --repo <owner/repo> GitHub repository (e.g., TommySaunders-ai/thinkmachine-tools)
   --site-id <id>     Notion site page ID
@@ -353,6 +495,7 @@ Environment Variables:
   NOTION_SERVICES_DB     Notion Services database ID
   NOTION_TESTIMONIALS_DB Notion Testimonials database ID
   NOTION_TEAM_DB         Notion Team database ID
+  NOTION_BUILD_LOG_DB    Notion Build Log database ID
   GITHUB_REPO            GitHub repository (owner/repo)
   OUTPUT_DIR             Output directory
 `);

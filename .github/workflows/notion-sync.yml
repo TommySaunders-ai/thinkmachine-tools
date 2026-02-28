@@ -1,0 +1,122 @@
+name: Notion Sync — Bidirectional Content Sync
+
+on:
+  # Run on a schedule to detect Notion changes
+  schedule:
+    - cron: '*/15 * * * *'  # Every 15 minutes
+
+  # Manual trigger with options
+  workflow_dispatch:
+    inputs:
+      direction:
+        description: 'Sync direction'
+        required: true
+        type: choice
+        options:
+          - full          # Notion → Build → GitHub → Notion status
+          - pull-only     # Notion → GitHub (no status write-back)
+          - push-only     # GitHub → Notion (update status only)
+          - detect-only   # Check for changes without building
+        default: 'full'
+      site_id:
+        description: 'Notion Site page ID (optional, uses env default if empty)'
+        required: false
+        type: string
+      force_rebuild:
+        description: 'Force rebuild even if no changes detected'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "notion-sync"
+  cancel-in-progress: false
+
+env:
+  NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+  NOTION_SITE_ID: ${{ inputs.site_id || secrets.NOTION_SITE_ID }}
+  NOTION_SITES_DB: ${{ secrets.NOTION_SITES_DB }}
+  NOTION_PAGES_DB: ${{ secrets.NOTION_PAGES_DB }}
+  NOTION_SECTIONS_DB: ${{ secrets.NOTION_SECTIONS_DB }}
+  NOTION_SERVICES_DB: ${{ secrets.NOTION_SERVICES_DB }}
+  NOTION_TESTIMONIALS_DB: ${{ secrets.NOTION_TESTIMONIALS_DB }}
+  NOTION_TEAM_DB: ${{ secrets.NOTION_TEAM_DB }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 1: Detect changes in Notion
+      - name: Detect Notion changes
+        id: detect
+        if: inputs.direction != 'push-only'
+        run: |
+          node src/cli/index.js sync --detect-only 2>&1 | tee /tmp/detect-output.txt
+          if grep -q "changes detected" /tmp/detect-output.txt; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Step 2: Build from Notion content
+      - name: Build site from Notion
+        id: build
+        if: |
+          inputs.direction != 'push-only' && inputs.direction != 'detect-only' &&
+          (steps.detect.outputs.has_changes == 'true' || inputs.force_rebuild == 'true' || github.event_name == 'workflow_dispatch')
+        run: |
+          node src/cli/index.js sync --direction ${{ inputs.direction || 'full' }} --output ./_site 2>&1 | tee /tmp/build-output.txt
+          echo "build_success=true" >> $GITHUB_OUTPUT
+
+      # Step 3: Commit generated files
+      - name: Commit generated files
+        if: steps.build.outputs.build_success == 'true'
+        run: |
+          git config user.name "io-site-builder[bot]"
+          git config user.email "bot@intelligentoperations.ai"
+          git add -A
+          git diff --cached --quiet || git commit -m "[notion-sync] Rebuild from Notion content changes"
+          git push
+
+      # Step 4: Deploy to GitHub Pages
+      - name: Setup Pages
+        if: steps.build.outputs.build_success == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: steps.build.outputs.build_success == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './_site'
+
+      - name: Deploy to GitHub Pages
+        if: steps.build.outputs.build_success == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # Step 5: Sync status back to Notion
+      - name: Update Notion with deploy status
+        if: always() && inputs.direction != 'pull-only'
+        run: |
+          if [ "${{ steps.build.outputs.build_success }}" = "true" ]; then
+            node src/cli/index.js sync --direction push-only --status Published
+          else
+            node src/cli/index.js sync --direction push-only --status Draft --error "Build failed"
+          fi

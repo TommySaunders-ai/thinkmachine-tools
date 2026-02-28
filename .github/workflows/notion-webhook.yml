@@ -1,0 +1,67 @@
+name: Notion Webhook — GitHub Event Sync
+
+on:
+  # Trigger on push to main (sync deploy status to Notion)
+  push:
+    branches: ["main"]
+
+  # Trigger on deployment status changes
+  deployment_status:
+
+  # Trigger on workflow completion
+  workflow_run:
+    workflows: ["Build from Notion & Deploy", "Notion Sync — Bidirectional Content Sync"]
+    types: [completed]
+
+  # Trigger on issues (optional: sync to Notion)
+  issues:
+    types: [opened, closed]
+
+  # Trigger on PRs (optional: sync to Notion)
+  pull_request:
+    types: [opened, closed]
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "notion-webhook-${{ github.event_name }}"
+  cancel-in-progress: true
+
+jobs:
+  sync-to-notion:
+    runs-on: ubuntu-latest
+    # Skip bot-generated pushes to avoid infinite loops
+    if: |
+      github.actor != 'io-site-builder[bot]' &&
+      !(github.event_name == 'push' && contains(github.event.head_commit.message, '[io-site-builder]')) &&
+      !(github.event_name == 'push' && contains(github.event.head_commit.message, '[notion-sync]'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Process webhook event
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_SITE_ID: ${{ secrets.NOTION_SITE_ID }}
+          NOTION_SITES_DB: ${{ secrets.NOTION_SITES_DB }}
+          NOTION_PAGES_DB: ${{ secrets.NOTION_PAGES_DB }}
+          NOTION_SECTIONS_DB: ${{ secrets.NOTION_SECTIONS_DB }}
+          NOTION_SERVICES_DB: ${{ secrets.NOTION_SERVICES_DB }}
+          NOTION_TESTIMONIALS_DB: ${{ secrets.NOTION_TESTIMONIALS_DB }}
+          NOTION_TEAM_DB: ${{ secrets.NOTION_TEAM_DB }}
+          NOTION_BUILD_LOG_DB: ${{ secrets.NOTION_BUILD_LOG_DB }}
+          GITHUB_WEBHOOK_SECRET: ${{ secrets.GITHUB_WEBHOOK_SECRET }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: node src/webhooks/github-handler.js
