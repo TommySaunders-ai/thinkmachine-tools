@@ -1,0 +1,36 @@
+{
+  "name": "@intelligentoperations/site-builder",
+  "version": "0.1.0",
+  "description": "AI-powered site builder for intelligentoperations.ai — Notion → Carbon → GitHub Pages",
+  "type": "module",
+  "main": "src/cli/index.js",
+  "bin": {
+    "io-site-builder": "src/cli/index.js"
+  },
+  "scripts": {
+    "build": "node src/cli/index.js build",
+    "generate": "node src/cli/index.js generate",
+    "publish": "node src/cli/index.js publish",
+    "preview": "node src/cli/index.js preview"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "intelligentoperations",
+    "site-builder",
+    "notion",
+    "carbon-design-system",
+    "github-pages",
+    "ai",
+    "sitemap",
+    "wireframe"
+  ],
+  "author": "intelligentoperations.ai",
+  "license": "MIT"
+}

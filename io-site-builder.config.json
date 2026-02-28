@@ -1,0 +1,19 @@
+{
+  "notion": {
+    "apiKey": "",
+    "databases": {
+      "sites": "",
+      "pages": "",
+      "sections": "",
+      "services": "",
+      "testimonials": "",
+      "team": ""
+    }
+  },
+  "siteId": "",
+  "outputDir": "./_site",
+  "github": {
+    "repo": "TommySaunders-ai/thinkmachine-tools",
+    "branch": "main"
+  }
+}

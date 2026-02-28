@@ -1,0 +1,661 @@
+[
+  {
+    "id": "leadspace-centered",
+    "carbonComponent": "c4d-leadspace",
+    "category": "hero",
+    "variant": "centered",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "primaryCTA": { "type": "button" },
+      "secondaryCTA": { "type": "button" },
+      "backgroundImage": { "type": "image", "optional": true }
+    },
+    "tags": ["hero", "landing", "centered", "image-background", "bold"],
+    "suitableFor": ["saas", "enterprise", "product", "marketing", "agency"],
+    "contentCount": null,
+    "placementHint": "page-top",
+    "pairingRules": {
+      "followedBy": ["feature-section", "content-block", "card-section", "content-group"],
+      "neverFollowedBy": ["leadspace", "masthead"]
+    }
+  },
+  {
+    "id": "leadspace-left",
+    "carbonComponent": "c4d-leadspace",
+    "category": "hero",
+    "variant": "left-aligned",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "primaryCTA": { "type": "button" },
+      "secondaryCTA": { "type": "button" },
+      "backgroundImage": { "type": "image", "optional": true }
+    },
+    "tags": ["hero", "landing", "left-aligned", "professional"],
+    "suitableFor": ["saas", "enterprise", "product", "consulting"],
+    "contentCount": null,
+    "placementHint": "page-top",
+    "pairingRules": {
+      "followedBy": ["feature-section", "content-block", "card-section"],
+      "neverFollowedBy": ["leadspace", "masthead"]
+    }
+  },
+  {
+    "id": "leadspace-block",
+    "carbonComponent": "c4d-leadspace-block-content",
+    "category": "hero",
+    "variant": "block",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 80 },
+      "description": { "type": "text", "maxLength": 300 },
+      "primaryCTA": { "type": "button" },
+      "mediaItem": { "type": "image", "optional": true }
+    },
+    "tags": ["hero", "media", "video", "product-demo", "block"],
+    "suitableFor": ["saas", "product", "technology"],
+    "contentCount": null,
+    "placementHint": "page-top",
+    "pairingRules": {
+      "followedBy": ["feature-section", "content-block", "content-group"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "leadspace-search",
+    "carbonComponent": "c4d-leadspace-with-search",
+    "category": "hero",
+    "variant": "search",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 160 },
+      "searchPlaceholder": { "type": "text" }
+    },
+    "tags": ["hero", "search", "documentation", "knowledge-base"],
+    "suitableFor": ["saas", "documentation", "support", "knowledge-base"],
+    "contentCount": null,
+    "placementHint": "page-top",
+    "pairingRules": {
+      "followedBy": ["card-section", "content-block", "link-list"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "feature-section-01",
+    "carbonComponent": "c4d-feature-section",
+    "category": "feature",
+    "variant": "image-left",
+    "contentSlots": {
+      "eyebrow": { "type": "text", "maxLength": 30 },
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 300 },
+      "image": { "type": "image" },
+      "primaryCTA": { "type": "button" }
+    },
+    "tags": ["feature", "image", "left", "showcase"],
+    "suitableFor": ["saas", "product", "enterprise", "agency", "marketing"],
+    "contentCount": 1,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["feature-section", "content-block", "cta", "testimonial"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "feature-section-02",
+    "carbonComponent": "c4d-feature-section",
+    "category": "feature",
+    "variant": "image-right",
+    "contentSlots": {
+      "eyebrow": { "type": "text", "maxLength": 30 },
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 300 },
+      "image": { "type": "image" },
+      "primaryCTA": { "type": "button" }
+    },
+    "tags": ["feature", "image", "right", "showcase", "alternating"],
+    "suitableFor": ["saas", "product", "enterprise", "agency", "marketing"],
+    "contentCount": 1,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["feature-section", "content-block", "cta", "testimonial"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "content-block-simple",
+    "carbonComponent": "c4d-content-block-simple",
+    "category": "content",
+    "variant": "simple",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 500 },
+      "primaryCTA": { "type": "button", "optional": true }
+    },
+    "tags": ["content", "text", "simple", "description", "overview"],
+    "suitableFor": ["saas", "enterprise", "agency", "portfolio", "marketing", "consulting"],
+    "contentCount": null,
+    "placementHint": "any",
+    "pairingRules": {
+      "followedBy": ["feature-section", "card-section", "content-group", "cta"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "content-block-segmented",
+    "carbonComponent": "c4d-content-block-segmented",
+    "category": "content",
+    "variant": "segmented",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "segments": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "image": { "type": "image", "optional": true }
+      }}
+    },
+    "tags": ["content", "segmented", "multiple-sections", "detailed"],
+    "suitableFor": ["enterprise", "consulting", "saas", "documentation"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "card-section", "testimonial"],
+      "neverFollowedBy": ["leadspace", "content-block-segmented"]
+    }
+  },
+  {
+    "id": "content-block-media",
+    "carbonComponent": "c4d-content-block-media",
+    "category": "content",
+    "variant": "with-media",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 300 },
+      "mediaItem": { "type": "image" },
+      "items": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" }
+      }}
+    },
+    "tags": ["content", "media", "video", "image", "rich"],
+    "suitableFor": ["saas", "product", "agency", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["feature-section", "cta", "card-section", "testimonial"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "content-group-cards",
+    "carbonComponent": "c4d-content-group-cards",
+    "category": "card-grid",
+    "variant": "content-cards",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "cards": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "cta": { "type": "button" }
+      }}
+    },
+    "tags": ["cards", "grid", "features", "services", "overview"],
+    "suitableFor": ["saas", "enterprise", "agency", "consulting", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "feature-section", "content-block"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "content-group-pictograms",
+    "carbonComponent": "c4d-content-group-pictograms",
+    "category": "card-grid",
+    "variant": "pictogram-cards",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "items": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "pictogram": { "type": "icon" }
+      }}
+    },
+    "tags": ["cards", "pictograms", "icons", "features", "benefits", "why-us"],
+    "suitableFor": ["saas", "enterprise", "consulting", "technology"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "content-block"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "card-section-simple",
+    "carbonComponent": "c4d-card-section-simple",
+    "category": "card-grid",
+    "variant": "simple-cards",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "cards": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "cta": { "type": "button" }
+      }}
+    },
+    "tags": ["cards", "grid", "catalog", "products", "services"],
+    "suitableFor": ["saas", "ecommerce", "agency", "portfolio", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "feature-section"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "card-section-images",
+    "carbonComponent": "c4d-card-section-images",
+    "category": "card-grid",
+    "variant": "image-cards",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "cards": { "type": "list", "itemSlots": {
+        "image": { "type": "image" },
+        "eyebrow": { "type": "text" },
+        "heading": { "type": "text" },
+        "cta": { "type": "button" }
+      }}
+    },
+    "tags": ["cards", "images", "portfolio", "gallery", "showcase"],
+    "suitableFor": ["portfolio", "agency", "ecommerce", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "content-block"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "card-section-carousel",
+    "carbonComponent": "c4d-card-section-carousel",
+    "category": "card-grid",
+    "variant": "carousel",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "cards": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "cta": { "type": "button" }
+      }}
+    },
+    "tags": ["cards", "carousel", "slider", "scroll", "dynamic"],
+    "suitableFor": ["saas", "ecommerce", "agency", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "feature-section"],
+      "neverFollowedBy": ["leadspace", "card-section-carousel"]
+    }
+  },
+  {
+    "id": "card-section-offset",
+    "carbonComponent": "c4d-card-section-offset",
+    "category": "card-grid",
+    "variant": "offset",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "cards": { "type": "list", "itemSlots": {
+        "eyebrow": { "type": "text" },
+        "heading": { "type": "text" },
+        "cta": { "type": "button" }
+      }}
+    },
+    "tags": ["cards", "offset", "creative", "overlapping", "modern"],
+    "suitableFor": ["agency", "portfolio", "marketing", "creative"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "feature-section"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "cta-block",
+    "carbonComponent": "c4d-cta-block",
+    "category": "cta",
+    "variant": "block",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "primaryCTA": { "type": "button" },
+      "secondaryCTA": { "type": "button", "optional": true }
+    },
+    "tags": ["cta", "call-to-action", "conversion", "signup"],
+    "suitableFor": ["saas", "enterprise", "agency", "ecommerce", "marketing", "consulting", "portfolio"],
+    "contentCount": null,
+    "placementHint": "page-bottom",
+    "pairingRules": {
+      "followedBy": ["footer"],
+      "neverFollowedBy": ["leadspace", "cta"]
+    }
+  },
+  {
+    "id": "cta-section",
+    "carbonComponent": "c4d-cta-section",
+    "category": "cta",
+    "variant": "section",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 80 },
+      "description": { "type": "text", "maxLength": 200 },
+      "primaryCTA": { "type": "button" },
+      "items": { "type": "list", "optional": true, "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "mediaItem": { "type": "image", "optional": true }
+      }}
+    },
+    "tags": ["cta", "call-to-action", "conversion", "detailed", "rich"],
+    "suitableFor": ["saas", "enterprise", "consulting"],
+    "contentCount": null,
+    "placementHint": "page-bottom",
+    "pairingRules": {
+      "followedBy": ["footer"],
+      "neverFollowedBy": ["leadspace", "cta"]
+    }
+  },
+  {
+    "id": "callout-quote",
+    "carbonComponent": "c4d-callout-quote",
+    "category": "testimonial",
+    "variant": "quote",
+    "contentSlots": {
+      "quote": { "type": "text", "maxLength": 300 },
+      "author": { "type": "text" },
+      "role": { "type": "text" }
+    },
+    "tags": ["testimonial", "quote", "social-proof", "trust"],
+    "suitableFor": ["saas", "enterprise", "agency", "consulting", "marketing"],
+    "contentCount": 1,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "feature-section", "card-section", "content-block"],
+      "neverFollowedBy": ["leadspace", "callout-quote"]
+    }
+  },
+  {
+    "id": "callout-media",
+    "carbonComponent": "c4d-callout-with-media",
+    "category": "testimonial",
+    "variant": "with-media",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "mediaItem": { "type": "image" }
+    },
+    "tags": ["testimonial", "media", "video", "social-proof", "rich"],
+    "suitableFor": ["saas", "product", "agency", "marketing"],
+    "contentCount": 1,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "feature-section", "card-section"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "logo-grid",
+    "carbonComponent": "c4d-logo-grid",
+    "category": "logo-wall",
+    "variant": "grid",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 40 },
+      "logos": { "type": "list", "itemSlots": {
+        "image": { "type": "image" },
+        "alt": { "type": "text" },
+        "href": { "type": "url", "optional": true }
+      }}
+    },
+    "tags": ["logos", "partners", "clients", "trust", "social-proof"],
+    "suitableFor": ["saas", "enterprise", "agency", "consulting", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["testimonial", "feature-section", "cta", "content-block"],
+      "neverFollowedBy": ["leadspace", "logo-grid"]
+    }
+  },
+  {
+    "id": "toc-horizontal",
+    "carbonComponent": "c4d-table-of-contents",
+    "category": "navigation",
+    "variant": "horizontal",
+    "contentSlots": {
+      "items": { "type": "list", "itemSlots": {
+        "label": { "type": "text" },
+        "href": { "type": "url" }
+      }}
+    },
+    "tags": ["toc", "navigation", "anchor-links", "long-page"],
+    "suitableFor": ["documentation", "enterprise", "consulting"],
+    "contentCount": null,
+    "placementHint": "after-hero",
+    "pairingRules": {
+      "followedBy": ["content-block", "content-group", "feature-section"],
+      "neverFollowedBy": ["leadspace", "toc"]
+    }
+  },
+  {
+    "id": "link-list-section",
+    "carbonComponent": "c4d-link-list-section",
+    "category": "link-list",
+    "variant": "section",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "links": { "type": "list", "itemSlots": {
+        "label": { "type": "text" },
+        "href": { "type": "url" },
+        "type": { "type": "text" }
+      }}
+    },
+    "tags": ["links", "resources", "related", "footer-adjacent"],
+    "suitableFor": ["enterprise", "documentation", "support", "saas"],
+    "contentCount": null,
+    "placementHint": "page-bottom",
+    "pairingRules": {
+      "followedBy": ["cta", "footer"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "accordion-faq",
+    "carbonComponent": "cds-accordion",
+    "category": "faq",
+    "variant": "accordion",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "items": { "type": "list", "itemSlots": {
+        "question": { "type": "text" },
+        "answer": { "type": "text" }
+      }}
+    },
+    "tags": ["faq", "accordion", "questions", "help", "support"],
+    "suitableFor": ["saas", "ecommerce", "enterprise", "support", "marketing", "consulting"],
+    "contentCount": null,
+    "placementHint": "page-bottom",
+    "pairingRules": {
+      "followedBy": ["cta", "footer"],
+      "neverFollowedBy": ["leadspace", "faq"]
+    }
+  },
+  {
+    "id": "pricing-structured",
+    "carbonComponent": "cds-structured-list",
+    "category": "pricing",
+    "variant": "comparison-table",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "tiers": { "type": "list", "itemSlots": {
+        "name": { "type": "text" },
+        "price": { "type": "text" },
+        "description": { "type": "text" },
+        "features": { "type": "list" },
+        "cta": { "type": "button" },
+        "highlighted": { "type": "boolean", "optional": true }
+      }}
+    },
+    "tags": ["pricing", "plans", "comparison", "tiers", "subscription"],
+    "suitableFor": ["saas", "enterprise", "ecommerce"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["faq", "testimonial", "cta"],
+      "neverFollowedBy": ["leadspace", "pricing"]
+    }
+  },
+  {
+    "id": "pricing-cards",
+    "carbonComponent": "cds-tile",
+    "category": "pricing",
+    "variant": "cards",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 200 },
+      "tiers": { "type": "list", "itemSlots": {
+        "name": { "type": "text" },
+        "price": { "type": "text" },
+        "period": { "type": "text" },
+        "description": { "type": "text" },
+        "features": { "type": "list" },
+        "cta": { "type": "button" },
+        "highlighted": { "type": "boolean", "optional": true }
+      }}
+    },
+    "tags": ["pricing", "cards", "plans", "tiers", "subscription", "saas"],
+    "suitableFor": ["saas", "ecommerce"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["faq", "testimonial", "cta"],
+      "neverFollowedBy": ["leadspace", "pricing"]
+    }
+  },
+  {
+    "id": "masthead-l0",
+    "carbonComponent": "c4d-masthead",
+    "category": "header",
+    "variant": "l0",
+    "contentSlots": {
+      "brandName": { "type": "text" },
+      "logo": { "type": "image", "optional": true },
+      "navItems": { "type": "list", "itemSlots": {
+        "label": { "type": "text" },
+        "href": { "type": "url" },
+        "children": { "type": "list", "optional": true }
+      }},
+      "primaryCTA": { "type": "button", "optional": true }
+    },
+    "tags": ["header", "navigation", "masthead", "global"],
+    "suitableFor": ["saas", "enterprise", "agency", "ecommerce", "marketing", "consulting", "portfolio"],
+    "contentCount": null,
+    "placementHint": "page-top",
+    "pairingRules": {
+      "followedBy": ["leadspace"],
+      "neverFollowedBy": ["masthead", "footer"]
+    }
+  },
+  {
+    "id": "footer-default",
+    "carbonComponent": "c4d-footer",
+    "category": "footer",
+    "variant": "default",
+    "contentSlots": {
+      "groups": { "type": "list", "itemSlots": {
+        "title": { "type": "text" },
+        "links": { "type": "list", "itemSlots": {
+          "label": { "type": "text" },
+          "href": { "type": "url" }
+        }}
+      }},
+      "legalLinks": { "type": "list", "itemSlots": {
+        "label": { "type": "text" },
+        "href": { "type": "url" }
+      }},
+      "locale": { "type": "text", "optional": true }
+    },
+    "tags": ["footer", "navigation", "global", "links"],
+    "suitableFor": ["saas", "enterprise", "agency", "ecommerce", "marketing", "consulting", "portfolio"],
+    "contentCount": null,
+    "placementHint": "page-bottom",
+    "pairingRules": {
+      "followedBy": [],
+      "neverFollowedBy": ["leadspace", "feature-section", "content-block"]
+    }
+  },
+  {
+    "id": "footer-short",
+    "carbonComponent": "c4d-footer",
+    "category": "footer",
+    "variant": "short",
+    "contentSlots": {
+      "legalLinks": { "type": "list", "itemSlots": {
+        "label": { "type": "text" },
+        "href": { "type": "url" }
+      }},
+      "locale": { "type": "text", "optional": true }
+    },
+    "tags": ["footer", "minimal", "short", "simple"],
+    "suitableFor": ["portfolio", "landing-page", "marketing"],
+    "contentCount": null,
+    "placementHint": "page-bottom",
+    "pairingRules": {
+      "followedBy": [],
+      "neverFollowedBy": ["leadspace", "feature-section"]
+    }
+  },
+  {
+    "id": "content-group-simple",
+    "carbonComponent": "c4d-content-group-simple",
+    "category": "content",
+    "variant": "group-simple",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 300 },
+      "items": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "description": { "type": "text" },
+        "primaryCTA": { "type": "button", "optional": true }
+      }}
+    },
+    "tags": ["content", "group", "list", "overview", "steps", "how-it-works"],
+    "suitableFor": ["saas", "enterprise", "consulting", "agency", "marketing"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial", "card-section", "feature-section"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  },
+  {
+    "id": "content-block-mixed",
+    "carbonComponent": "c4d-content-block-mixed",
+    "category": "content",
+    "variant": "mixed",
+    "contentSlots": {
+      "heading": { "type": "text", "maxLength": 60 },
+      "description": { "type": "text", "maxLength": 300 },
+      "groups": { "type": "list", "itemSlots": {
+        "heading": { "type": "text" },
+        "items": { "type": "list" }
+      }}
+    },
+    "tags": ["content", "mixed", "cards-and-text", "rich", "complex"],
+    "suitableFor": ["enterprise", "saas", "consulting"],
+    "contentCount": null,
+    "placementHint": "mid-page",
+    "pairingRules": {
+      "followedBy": ["cta", "testimonial"],
+      "neverFollowedBy": ["leadspace"]
+    }
+  }
+]
